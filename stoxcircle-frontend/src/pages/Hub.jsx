@@ -121,7 +121,7 @@ export default function Hub() {
                 setSearchResults(data);
             }
             } catch (error) {
-            console.error("Search failed:", error);
+               console.error("Search failed:", error);
             } finally {
             setIsSearching(false);
             }
