@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { UsersThree, Plus, MagnifyingGlass, X, ChartPolar, User } from '@phosphor-icons/react';
 import PulseLoader from '../components/PulseLoader';
-
 export default function Hub() {
+    const [title, setTitle] = useState('StoxCircle - Hub')
+    useEffect(() => {
+        document.title = title
+    }, [])
     const navigate = useNavigate();
 
     // State for data
@@ -152,10 +155,7 @@ export default function Hub() {
         <div style={{backgroundColor: '#0a0a0a', backgroundImage: 'radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.08) 0%, transparent 50%)', color: '#e5e7eb', padding: '48px 24px'}}>       
             {/* HEADER BAR */}
             <div className="flex-between" style={{ maxWidth: '1000px', margin: '0 auto 48px auto', alignItems: 'center' }}>
-                <div className="flex-row" style={{ alignItems: 'center', gap: '12px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span style={{ fontSize: '18px' }}>🌐</span>
-                    </div>
+                <div className="flex-row" style={{ alignItems: 'center', gap: '12px' }}>                    
                     <h1 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>EquityCircle</h1>
                 </div>
                 

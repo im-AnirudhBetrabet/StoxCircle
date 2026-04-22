@@ -1,8 +1,15 @@
 import { PulseIcon, RobotIcon, StackIcon } from '@phosphor-icons/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
+    const [title, setPageTitle] = useState('StoxCircle')
+
+    useEffect(() => {
+        document.title = title
+    }, [])
+
+
     const navigate = useNavigate();
   return (
     <div class="landing-wrapper">

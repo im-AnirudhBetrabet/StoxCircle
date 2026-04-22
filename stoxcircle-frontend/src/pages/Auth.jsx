@@ -1,5 +1,5 @@
 // src/pages/Auth.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { ChartPolar, ArrowRight } from '@phosphor-icons/react';
@@ -7,7 +7,11 @@ import { ChartPolar, ArrowRight } from '@phosphor-icons/react';
 export default function Auth() {
   const navigate                = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
+  const [title, setPageTitle] = useState('StoxCircle - Login')
   
+      useEffect(() => {
+          document.title = title
+      }, [])
   // Form State
   const [email      , setEmail      ] = useState('');
   const [password   , setPassword   ] = useState('');

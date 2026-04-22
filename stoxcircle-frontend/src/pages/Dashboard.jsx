@@ -15,7 +15,11 @@ export default function Dashboard() {
   // UI & Data State
   const [loading, setLoading] = useState(true);
   const [data, setData]       = useState(null);
-  
+  useEffect(() => {
+    if (data){
+      document.title = data.group_info?.name + ' - Dashboard'
+    }
+  }, [data])
   // Drill-down State
   const [selectedCohortId, setSelectedCohortId] = useState(null);
   const [selectedStock   , setSelectedStock   ] = useState(null);
