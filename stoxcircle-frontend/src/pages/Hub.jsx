@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { UsersThree, Plus, MagnifyingGlass, X, ChartPolar, User } from '@phosphor-icons/react';
 import PulseLoader from '../components/PulseLoader';
+import CircleLoader from '../components/CircleLoader';
 export default function Hub() {
     const [title, setTitle] = useState('StoxCircle - Hub')
     useEffect(() => {
@@ -190,9 +191,9 @@ export default function Hub() {
                     <div className="glass-panel" style={{ padding: '32px' }}>
                         <h3 style={{ margin: '0 0 16px 0', fontSize: '16px' }}>Find a Group</h3>
                         <input type="text" placeholder="🔍 Search by name or ID..." className="glass-input" style={{ width: '100%' }} onChange={(e) => setSearchQuery(e.target.value)}/>
-
+                        
                         {searchResults.length > 0 && (
-                            <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px', marginTop:'1rem' }}>
                                 {searchResults.map((result) => (
                                     <div key={result.id} className="flex-between" style={{ padding: '8px 12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                                         <span className="text-sm font-medium">{result.name}</span>
@@ -207,6 +208,13 @@ export default function Hub() {
                                 ))}
                             </div>
                         )}
+                        {
+                            isSearching && (
+                                
+                                <CircleLoader />
+                                
+                            )
+                        }
                     </div>
                 </div>
 

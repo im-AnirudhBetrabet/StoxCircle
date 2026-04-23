@@ -75,7 +75,12 @@ export default function Dashboard() {
       
       if (cohortsHistResponse.ok){
         const history = await cohortsHistResponse.json()
-        setClosedCohorts(history)
+        if (history){
+          setClosedCohorts(history)
+        } else {
+          setClosedCohorts([])
+        }
+          
       }
     } catch (error) {
       setMockData(); 
@@ -212,7 +217,7 @@ export default function Dashboard() {
   // 2. MEMBER EQUITY FORMATTING
   const ringColors    = ["#3b82f6", "#a855f7", "#ec4899", "#f59e0b", "#10b981", "#ef4444"];
   const globalMembers = data.member_info?.map((m, idx) => {
-    const stats = data.member_splits?.[m.user_id] || { invested_amount: 0, equity_percentage: 0 };
+  const stats         = data.member_splits?.[m.user_id] || { invested_amount: 0, equity_percentage: 0 };
     return {
       id      : m.user_id,
       name    : m.profiles.display_name,
@@ -258,6 +263,7 @@ export default function Dashboard() {
               </button>
             )}
           </div>
+          
           <div className="glass-panel mb-8" style={{ padding: '24px' }}>
             <h2 className="mb-6" style={{ fontSize: '18px', color: '#e5e7eb' }}>Global Fund Health</h2>
 
@@ -406,7 +412,8 @@ export default function Dashboard() {
             
             {/* The 2x2 Grid of Cohort Cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px', marginTop: '1rem'}}>
-              {data.active_cohorts.map(cohort => (
+              {data.active_cohorts?.length > 0 ? (
+                data.active_cohorts.map(cohort => (
                   <div
                     key={cohort.id}
                     className="list-card"
@@ -420,7 +427,9 @@ export default function Dashboard() {
                     <div className="text-sm font-semibold mb-2">{cohort.month_year}</div>
                     <div className="text-xs text-muted">Pool: ₹{cohort.total_pool?.toLocaleString() || 0}</div>
                   </div>
-                ))}
+                ))
+              ) :
+              <p className="text-muted">No active cohorts yet.</p>}
             </div>
           </div>
           <div className="grid-2-col">
