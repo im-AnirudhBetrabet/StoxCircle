@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { ArrowLeft, Plus, CurrencyInr, ChartLineUp, X } from '@phosphor-icons/react';
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, ReferenceLine, ReferenceDot, Area } from 'recharts';
+
 import Loader from './Loader';
+import PerformanceChart from './PerformanceChart';
 
 const renderSectorRing = (exposureData) => {
-    console.log(exposureData)
     if (!exposureData || exposureData.length === 0) return (
       <div className="text-xs text-muted mt-4">No active market exposure.</div>
     );
@@ -391,6 +392,7 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
     }
   };
   if (loading || !data) return <Loader text="Loading cohort.." />;
+
 
   return (
     <div style={{ animation: 'fadeIn 0.3s ease' }}>
@@ -812,7 +814,7 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
       {selectedStock && (
         <div className="modal-overlay active" onClick={(e) => e.target.classList.contains('modal-overlay') && setSelectedStock(null)}>
           <div className="glass-panel modal-content" style={{ maxWidth: '600px', width: '100%' }}>
-            <X size={24} className="modal-close" onClick={() => setSelectedStock(null)} />
+            <X size={24} className="modal-close" onClick={() => setSelectedStock(null)} cursor="pointer"/>
             
             <div className="flex-row mb-6">
               <div className="flex-center" style={{ width: 40, height: 40, borderRadius: '8px', background: 'rgba(59, 130, 246, 0.1)', color: '#60a5fa' }}>
@@ -825,18 +827,7 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
             </div>
 
             {/* Recharts Graph */}
-            {selectedStock.history && (
-              <div style={{ height: '200px', width: '100%', marginBottom: '24px' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={selectedStock.history} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <XAxis dataKey="name" stroke="#8b8b93" fontSize={12} tickLine={false} axisLine={false} />
-                    <YAxis stroke="#8b8b93" fontSize={12} tickLine={false} axisLine={false} domain={['auto', 'auto']} />
-                    <Tooltip contentStyle={{ backgroundColor: '#101014', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#fff' }} itemStyle={{ color: '#fff' }} formatter={(value) => [`₹${value}`, 'Price']} />
-                    <Line type="monotone" dataKey="price" stroke="#3b82f6" strokeWidth={3} dot={false} activeDot={{ r: 6, fill: '#3b82f6', stroke: '#101014', strokeWidth: 2 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            )}
+            {selectedStock.history && <PerformanceChart data={selectedStock?.history?.data} buyDate={selectedStock.buy_date} buyPrice={selectedStock.avg}/>}
 
             <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '24px', paddingBottom: '24px' }}>
               <h3 className="text-sm mb-4">Trade Plan Matrix</h3>
@@ -912,18 +903,26 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
               })()}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '3fr', gap: '16px', marginBottom: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '3fr 3fr', gap: '16px', marginBottom: '24px' }}>
               <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <p className="text-xs text-muted mb-1">Average Buy Price</p>
                 <div className="text-sm font-semibold">₹{selectedStock.avg.toLocaleString()}</div>
               </div>
               <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <p className="text-xs text-muted mb-1">Total Quantity</p>
-                <div className="text-sm font-semibold">{selectedStock.qty} Shares</div>
-              </div>
-              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
                 <p className="text-xs text-muted mb-1">Current Price</p>
                 <div className="text-sm font-semibold">₹{selectedStock.current}</div>
+              </div>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <p className="text-xs text-muted mb-1">Invested Value</p>
+                <div className="text-sm font-semibold">₹{(selectedStock.avg * selectedStock.qty).toFixed(2)}</div>
+              </div>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <p className="text-xs text-muted mb-1">Current Value</p>
+                <div className="text-sm font-semibold">₹{(selectedStock.current * selectedStock.qty).toFixed(2)}</div>
+              </div>
+              <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <p className="text-xs text-muted mb-1">Total Quantity Held</p>
+                <div className="text-sm font-semibold">{selectedStock.qty} Shares</div>
               </div>
             </div>
             

@@ -444,7 +444,7 @@ export default function Dashboard() {
                   <p className="text-muted">No closed cohorts yet.</p>
                 ) : (
                   <div className="responsive-stats-grid">
-                    {closedCohorts.map(cohort => (
+                    {closedCohorts?.map(cohort => (
                       <div
                         key={cohort.id}
                         className="list-card"
