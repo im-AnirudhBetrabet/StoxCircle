@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { UsersThree, Plus, MagnifyingGlass, X, ChartPolar, User } from '@phosphor-icons/react';
-import PulseLoader from '../components/PulseLoader';
-import CircleLoader from '../components/CircleLoader';
+import PulseLoader from '../components/loaders/PulseLoader';
+import CircleLoader from '../components/loaders/CircleLoader';
 export default function Hub() {
     const [title, setTitle] = useState('StoxCircle - Hub')
     useEffect(() => {
