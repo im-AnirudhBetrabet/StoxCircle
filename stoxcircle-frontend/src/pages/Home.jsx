@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, UserCircle } from '@phosphor-icons/react';
+import { Plus, UserCircle, CalendarBlank } from '@phosphor-icons/react';
 import Modal from '../components/Modal';
 import { mockGroups, formatCurrency } from '../data/mockData';
 import { supabase } from '../lib/supabase';
@@ -10,12 +10,27 @@ import PulseLoader from '../components/loaders/PulseLoader';
 const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } };
 
 export default function Home() {
+    
     const [modalOpen       , setModalOpen       ] = useState(false);
     const [userGroups      , setUserGroups      ] = useState([]);
     const [isFetchingGroups, setIsFetchingGroups] = useState(false);
     const [session         , setSession         ] = useState(null);
-    const [newGroupName    , setNewGroupName    ] = useState('')
+    const [newGroupName    , setNewGroupName    ] = useState('');
+    const [userName        , setUserName        ] = useState('');
+
     const navigate = useNavigate();
+    const todayDate = new Intl.DateTimeFormat('en-US', { 
+        weekday: 'long', 
+        month: 'long', 
+        day: 'numeric' 
+    }).format(new Date())
+    
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour < 12) return 'Good morning';
+        if (hour < 18) return 'Good afternoon';
+        return 'Good evening';
+    };
     const controller = new AbortController();
 
     useEffect(() => {
@@ -23,6 +38,14 @@ export default function Home() {
             setSession(data.session);
         });
     }, []);
+
+    useEffect(() => {
+        if (session){
+            const user_name = (session?.user?.user_metadata?.display_name || session?.user?.user_metadata?.full_name).split(' ')[0];
+            setUserName(user_name);
+        }
+    }, [session])
+    
 
     const fetchUserGroups = async (controller) => {
         setIsFetchingGroups(true);
@@ -105,14 +128,26 @@ export default function Home() {
 
     return (
         <motion.div initial="hidden" animate="visible" exit={{ opacity: 0 }} variants={fadeUp} className="page-container">
+            <div className="greeting-section">
+                
+                {/* Left Side: Text */}
+                <div className="greeting-text-block">
+                    <h1 className="greeting-title">
+                        {getGreeting()}, <span className="text-gradient-brand">{userName}</span>
+                    </h1>
+                    <p className="greeting-subtitle">
+                        Here is how your trading groups are performing today.
+                    </p>
+                </div>
+
+            </div>
             <header className="page-header">
                 <div>
-                    <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 4 }}>Your Groups</h1>
-                    <p style={{ color: 'var(--text-secondary)' }}>Manage shared portfolios and track performance.</p>
+                    {/* <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 4 }}>Your Groups</h1> */}
+                    {/* <p style={{ color: 'var(--text-secondary)' }}>Manage shared portfolios and track performance.</p> */}
                 </div>
                 <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Plus size={18} weight="bold" /> Create Group</button>
             </header>
-
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
                 {
                     isFetchingGroups ?
