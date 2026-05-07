@@ -338,7 +338,8 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
         body: JSON.stringify({ 
                               "status"    : "CLOSED",
                               "sell_price": parseFloat(sellPrice),
-                              "sell_date" : sellDate
+                              "sell_date" : sellDate,
+                              "group_id"  : groupId
                              })
       });
 
@@ -815,7 +816,7 @@ export default function CohortView({ groupId, cohortId, onBack, currentUserRole,
       )}
 
       {
-        selectedStock && <SelectedStockView handleSelectedStock={setSelectedStock} handleSellDate={setSellDate} handleSellPrice={setSellPrice} refreshCohortDetails={fetchCohortDetails} selectedStock={selectedStock} isClosing={isClosing} sellDate={sellDate} sellPrice={sellPrice} closePosition={handleClosePosition}/>
+        selectedStock && <SelectedStockView groupId={groupId} cohortId={cohortId} handleSelectedStock={setSelectedStock} handleSellDate={setSellDate} handleSellPrice={setSellPrice} refreshCohortDetails={fetchCohortDetails} selectedStock={selectedStock} isClosing={isClosing} sellDate={sellDate} sellPrice={sellPrice} closePosition={handleClosePosition}/>
       }
 
       {isSettleOpen && (

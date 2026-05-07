@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase';
 import { ArrowLeft, Plus, CurrencyInr, ChartLineUp, X } from '@phosphor-icons/react';
 import PerformanceChart from './PerformanceChart';
@@ -19,8 +19,57 @@ const calculateTradePlan = (entryPrice, currentPrice) => {
     };
 };
 
-function SelectedStockView({ handleSelectedStock, selectedStock, handleSellPrice, handleSellDate, refreshCohortDetails, isClosing, sellDate, sellPrice, closePosition }) {
+function SelectedStockView({ groupId, cohortId, handleSelectedStock, selectedStock, handleSellPrice, handleSellDate, refreshCohortDetails, isClosing, sellDate, sellPrice, closePosition }) {
+    const [activeCohorts , setActiveCohorts ] = useState([])
+    const [targetCohortId, setTargetCohortId] = useState('');
 
+    useEffect(() => {
+        if(selectedStock.status === "CLOSED"){
+            const fetchActiveCohorts = async () => {
+                try {
+                    const { 
+                        data: { session } 
+                    } = await supabase.auth.getSession();
+                    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/cohorts?group_id=${groupId}`, {
+                    headers: { 'Authorization': `Bearer ${session.access_token}` }
+                    });
+            
+                    if (response.ok) {
+                        const cohorts = await response.json();
+                        let data      = cohorts.filter(( cohort ) => cohort.id != cohortId)
+                        setActiveCohorts(data)
+                    } 
+                } catch (error) {
+                    console.error("Error fetching active cohort details:", error);
+                } 
+            }
+            fetchActiveCohorts()
+        }
+    }, [selectedStock])
+
+    const handleRollover = async () => {
+        if (!targetCohortId) return alert("Select a destination cohort for rollovers.")
+        try {
+            const { 
+                data: { session } 
+            } = await supabase.auth.getSession();
+
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/ledger/rollover-mid-cycle?trade_id=${selectedStock.id}&target_cohort_id=${targetCohortId}`, {
+                method : 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${session.access_token}` 
+                }
+            });
+            if (response.ok) {
+                console.log("Rolled over successfully");
+                refreshCohortDetails(); 
+                handleSelectedStock(null);
+            } 
+        } catch (error) {
+            console.error("Error rolling over funds:", error);
+        } 
+        
+    }
     const adjustStockEarning = async () => {
         const adjustment = prompt("Enter Intraday PnL or Dividend adjustment (use negative for losses):");
 
@@ -186,7 +235,7 @@ function SelectedStockView({ handleSelectedStock, selectedStock, handleSellPrice
             </div>
             
             {
-                selectedStock.status == "OPEN" && 
+                selectedStock.status == "OPEN" ? 
                 (
                     <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '24px' }}>
                         <h3 className="text-sm mb-4">Close Position</h3>
@@ -228,6 +277,21 @@ function SelectedStockView({ handleSelectedStock, selectedStock, handleSellPrice
                         </button>
                                 
                     </div>
+                ) : (
+                    !selectedStock.redeployed && (
+                        <div className="flex-row mb-6">
+                            <select className="glass-input" value={targetCohortId} onChange={ (e) => setTargetCohortId(e.target.value)}>
+                                <option value=''>Select target cohort</option>
+                                {
+                                    activeCohorts?.map((a) => <option value={a.id} key={a.id}>{a.month_year}</option>)
+                                }
+                            </select>
+                            <button className="btn-solid" style={{ width: '100%', background: '#ef4444', color: 'white', border: 'none'}} onClick={handleRollover}>
+                                Rollover funds
+                            </button>
+                        </div>
+                    )
+                    
                 )
             }
     
