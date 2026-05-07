@@ -47,7 +47,7 @@ export default function App() {
         <Routes location={location} key={location.pathname}>
           <Route path="/home" element={<LandingPage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </AnimatePresence>
     );
