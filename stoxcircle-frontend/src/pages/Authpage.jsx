@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, EnvelopeSimple, LockKey, User, WarningCircle, CheckCircle } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
-import { supabase } from '../lib/supabase'; // Import the Supabase client we exported in App.jsx
+import { supabase } from '../lib/supabase'; 
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -10,7 +10,7 @@ export default function AuthPage() {
   // Form State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [displayName, setDisplayName] = useState('');
   
   // UI State
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ export default function AuthPage() {
           password,
           options: {
             data: {
-              name: fullName,
+              name: displayName,
             }
           }
         });
@@ -126,7 +126,7 @@ export default function AuthPage() {
                       <label style={{ display: 'block', fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 6, fontWeight: 500 }}>Full Name</label>
                       <div style={{ position: 'relative' }}>
                          <User size={18} color="var(--text-secondary)" style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)' }} />
-                         <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="input-control" placeholder="John Doe" style={{ paddingLeft: 44 }} required={!isLogin} />
+                         <input type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} className="input-control" placeholder="John Doe" style={{ paddingLeft: 44 }} required={!isLogin} />
                       </div>
                     </div>
                  )}
