@@ -38,7 +38,6 @@ export default function LandingPage() {
                     </div>
                     <div style={{ display: 'flex', gap: 12 }}>
                         <button className="btn btn-secondary" onClick={() => navigate('/auth')}>Log in</button>
-                        <button className="btn btn-primary" onClick={() => navigate('/auth')}>Get Started</button>
                     </div>
                 </div>
             </nav>
@@ -63,9 +62,6 @@ export default function LandingPage() {
                 <div style={{ display: 'flex', gap: 16, justifyContent: 'center' }}>
                     <button className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem', background: 'linear-gradient(135deg, var(--brand-primary) 0%, #2563eb 100%)' }} onClick={() => navigate('/auth')}>
                         Start your circle
-                    </button>
-                    <button className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem', background: 'rgba(255,255,255,0.03)' }}>
-                        Explore Demo
                     </button>
                 </div>
             </motion.section>
