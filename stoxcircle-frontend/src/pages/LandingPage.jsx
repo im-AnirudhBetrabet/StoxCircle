@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { UsersThree, ChartBar, Brain } from '@phosphor-icons/react';
+import { useEffect, useState } from 'react';
 
 const cardVariants = {
     hidden: (direction) => ({
@@ -15,6 +16,11 @@ const cardVariants = {
 };
 
 export default function LandingPage() {
+    const [title, setTitle] = useState('Stox Circle - Community investing platform');
+
+    useEffect(() => {
+        document.title = title
+    }, []);
     const navigate = useNavigate();
 
     return (

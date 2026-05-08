@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, EnvelopeSimple, LockKey, User, WarningCircle, CheckCircle } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,11 @@ import { supabase } from '../lib/supabase';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const [title, setTitle] = useState('Stox Circle - Get Started');
   
+    useEffect(() => {
+        document.title = title
+    }, []);
   // Form State
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

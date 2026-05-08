@@ -37,6 +37,14 @@ export default function GroupDashboard() {
     // Action Loading States (for micro-interactions)
     const [processingRequest, setProcessingRequest] = useState(false);
 
+    const [title, setTitle] = useState('');
+    
+    useEffect(() => {
+        if (group?.name){
+            document.title = group?.name
+        }
+    }, [group?.name]);
+
     const { groupId } = useParams();
 
     const controller = new AbortController();

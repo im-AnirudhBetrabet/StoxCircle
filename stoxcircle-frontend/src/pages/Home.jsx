@@ -18,6 +18,12 @@ export default function Home() {
     const [newGroupName    , setNewGroupName    ] = useState('');
     const [userName        , setUserName        ] = useState('');
 
+    const [title, setTitle] = useState('Stox Circle - Home');
+
+    useEffect(() => {
+        document.title = title
+    }, []);
+
     const navigate = useNavigate();
     const todayDate = new Intl.DateTimeFormat('en-US', { 
         weekday: 'long', 
