@@ -68,7 +68,6 @@ export default function GroupDashboard() {
             fetchGroupInfo();
 
         } catch (err) {
-            console.log(err)
             setError('Failed to load dashboard data');
         } finally {
             // setIsLoading(false);

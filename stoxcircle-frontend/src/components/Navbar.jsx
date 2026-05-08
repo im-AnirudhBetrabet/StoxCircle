@@ -87,13 +87,13 @@ export default function Navbar() {
     useEffect(() => {
         const fetchUser = async () => {
             const response = await supabase.auth.getUser();
-            const user_name = response.data?.user.user_metadata?.display_name || response.data?.user.user_metadata?.full_name
-            if (user_name.toString().split(' ').length > 1) {
-                let splits = user_name.toString().split(' ');
+            const user_name = response.data?.user.user_metadata?.display_name || response.data?.user.user_metadata?.full_name || response.data?.user.user_metadata?.name
+            if (user_name?.toString().split(' ').length > 1) {
+                let splits = user_name?.toString().split(' ');
                 let initials = (splits[0][0] + splits[1][0]).toUpperCase();
                 setUserName(initials)
             } else {
-                let initials = user_name[0].toUpperCase()
+                let initials = user_name[0]?.toUpperCase()
                 setUserName(initials)
             }
         }

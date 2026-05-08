@@ -47,7 +47,7 @@ export default function Home() {
 
     useEffect(() => {
         if (session){
-            const user_name = (session?.user?.user_metadata?.display_name || session?.user?.user_metadata?.full_name).split(' ')[0];
+            const user_name = (session?.user?.user_metadata?.display_name || session?.user?.user_metadata?.full_name || session?.user?.user_metadata?.name).split(' ')[0];
             setUserName(user_name);
         }
     }, [session])
