@@ -116,7 +116,6 @@ export default function Navbar() {
                     <button 
                         title="Log Out"
                         onClick={() => supabase.auth.signOut()} 
-                        className="desktop-only" 
                         style={{ background: 'transparent', color: 'var(--text-secondary)', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }}
                         onMouseEnter={(e) => e.currentTarget.style.color = 'var(--semantic-danger)'}
                         onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-secondary)'}
