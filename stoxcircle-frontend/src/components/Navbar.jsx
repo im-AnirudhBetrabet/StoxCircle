@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MagnifyingGlass, Bell, X, SignOutIcon, CheckCircle, SpinnerGap, UsersIcon, ArrowRightIcon, ClockIcon } from '@phosphor-icons/react';
 import { supabase } from '../lib/supabase';
@@ -18,6 +18,7 @@ export default function Navbar() {
     const [searchQuery  , setSearchQuery  ] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [isSearching  , setIsSearching  ] = useState(false);
+    const navigate = useNavigate()
 
     const [isJoiningGroup , setIsJoiningGroup ] = useState(false);
     const [requestedGroups, setRequestedGroups] = useState(new Set());
@@ -186,7 +187,7 @@ export default function Navbar() {
                                                         {/* Dynamic Button State Rendering */}
                                                         {isMember ? (
                                                             <button
-                                                                onClick={() => { closeSearch(); navigate(`/group/${group.id}`); }}
+                                                                onClick={() => { navigate(`/group/${group.id}`); closeSearch();  }}
                                                                 className="btn btn-secondary"
                                                                 style={{ minWidth: '140px' }}
                                                             >
