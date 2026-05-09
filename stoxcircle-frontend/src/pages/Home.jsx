@@ -157,7 +157,7 @@ export default function Home() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
                 {
                     isFetchingGroups ?
-                    <PulseLoader /> :
+                    <PulseLoader text='Loading your groups'/> :
                     (
                         userGroups ? (
                             userGroups.map(group => (

@@ -9,6 +9,7 @@ import HoldingDetailModal from '../components/modals/HoldingDetailModal';
 import EquityModal from '../components/modals/EquityModal';
 import AnalyticsModal from '../components/modals/AnalyticsModal';
 import ClosedTradesModal from '../components/modals/ClosedTradesModal';
+import PulseLoader from '../components/loaders/PulseLoader';
 
 
 const SECTOR_COLORS = ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981', '#ec4899', '#06b6d4'];
@@ -296,11 +297,7 @@ export default function GroupDashboard() {
 
     // --- Render States ---
     if (isLoading) {
-        return (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px' }}>
-                <SpinnerGap size={32} color="var(--brand-primary)" style={{ animation: 'spin 1s linear infinite' }} />
-            </div>
-        );
+        return <PulseLoader text='Crunching Group Data' />
     }
 
     if (error) {
