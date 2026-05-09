@@ -154,34 +154,38 @@ export default function Home() {
                 </div>
                 <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Plus size={18} weight="bold" /> Create Group</button>
             </header>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
+            
                 {
                     isFetchingGroups ?
-                    <PulseLoader text='Loading your groups'/> :
+                    <><PulseLoader text='Loading your groups'/></> :
                     (
-                        userGroups ? (
-                            userGroups.map(group => (
-                                <motion.div
-                                    key={group.id} whileHover={{ y: -4, backgroundColor: 'rgba(30, 30, 35, 0.6)', borderColor: 'var(--border-hover)' }} onClick={() => navigate(`/group/${group.id}`)}
-                                    style={{ background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 24, cursor: 'pointer', transition: 'border 0.2s, background 0.2s', backdropFilter: 'blur(12px)' }}
-                                >
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
-                                        <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{group.name}</h3>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.05)', padding: '4px 10px', borderRadius: 100, fontSize: '0.8rem', color: 'var(--text-secondary)' }}><UserCircle size={14} /> {group.member_count}</div>
-                                    </div>
-                                    <div>
-                                        <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Total Value</p>
-                                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-                                            <span style={{ fontSize: '1.75rem', fontWeight: 600 }}>{formatCurrency(group.total_pool_value)}</span>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
+                        {
+                            userGroups ? (
+                                userGroups.map(group => (
+                                    <motion.div
+                                        key={group.id} whileHover={{ y: -4, backgroundColor: 'rgba(30, 30, 35, 0.6)', borderColor: 'var(--border-hover)' }} onClick={() => navigate(`/group/${group.id}`)}
+                                        style={{ background: 'var(--bg-glass)', border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', padding: 24, cursor: 'pointer', transition: 'border 0.2s, background 0.2s', backdropFilter: 'blur(12px)' }}
+                                    >
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24 }}>
+                                            <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{group.name}</h3>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.05)', padding: '4px 10px', borderRadius: 100, fontSize: '0.8rem', color: 'var(--text-secondary)' }}><UserCircle size={14} /> {group.member_count}</div>
                                         </div>
-                                    </div>
-                                </motion.div>
-                            ))
-                        ):
-                        <p style={{ color: 'var(--text-secondary)' }}>No active memberships found. Create or join a group to get started</p>
+                                        <div>
+                                            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: 4 }}>Total Value</p>
+                                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+                                                <span style={{ fontSize: '1.75rem', fontWeight: 600 }}>{formatCurrency(group.total_pool_value)}</span>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            ) :
+                            <p style={{ color: 'var(--text-secondary)' }}>No active memberships found. Create or join a group to get started</p>
+                        }
+                    </div>
                     )
                 }
-            </div>
+            
 
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title="Create Group">
                 <form onSubmit={(e) => { createNewGroup(e); setModalOpen(false); }}>
