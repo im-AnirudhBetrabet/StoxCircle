@@ -205,6 +205,7 @@ body {
   display: flex;
 }
 
+
 .hero-title {
   font-size: 4rem;
   margin-bottom: 24px;
@@ -446,6 +447,9 @@ body {
   /* On desktop, chart takes left, sell form takes right */
   .holding-modal-grid {
     grid-template-columns: 1.2fr 1fr; 
+  }
+  .mobile-only{
+    display: none !important;
   }
 }
 
@@ -853,6 +857,32 @@ body {
   margin-bottom: 16px;
 }
 
+.analytics-modal-body {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding-right: 12px; /* Breathing room for the scrollbar */
+  margin-right: -4px;  /* Offsets the padding so the grid doesn't shrink */
+}
+
+/* Custom Scrollbar for Modal */
+.analytics-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.analytics-modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.analytics-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.analytics-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
 @media (min-width: 768px) {
   .analytics-modal-grid {
     grid-template-columns: repeat(2, 1fr); /* Changed from 3 to 2 */
@@ -869,7 +899,9 @@ body {
   justify-content: space-between;
   gap: 16px;
 }
-
+.analytics-card-full {
+  grid-column: 1 / -1; 
+}
 .analytics-section {
   display: flex;
   flex-direction: column;
@@ -1082,4 +1114,207 @@ body {
   border-radius: 100px;
   border: 1px solid var(--border-subtle);
   backdrop-filter: blur(8px);
+}
+
+
+/* --- SECTOR ALLOCATION CARD --- */
+.allocation-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.allocation-bar-track {
+  display: flex;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.allocation-segment {
+  height: 100%;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.allocation-segment:hover {
+  filter: brightness(1.2);
+}
+
+.sector-legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.sector-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+.sector-legend-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sector-name-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.sector-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.sector-value-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.2;
+}
+
+.sector-pct {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sector-val {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+}
+
+.history-modal-body {
+  /* Calculates exactly 100% of the screen minus ~160px for the header/footer */
+  max-height: calc(90dvh - 160px); 
+  overflow-y: auto;
+  overflow-x: hidden; /* Prevents accidental horizontal jitter */
+  margin: 0 -20px; 
+  padding: 0 20px;
+  
+  /* Enables buttery-smooth momentum scrolling on iPhones */
+  -webkit-overflow-scrolling: touch; 
+}
+
+/* Custom Scrollbar for the feed */
+.history-modal-body::-webkit-scrollbar { 
+  width: 5px; 
+}
+.history-modal-body::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+.history-modal-body::-webkit-scrollbar-thumb { 
+  background: rgba(255, 255, 255, 0.15); 
+  border-radius: 10px; 
+}
+.history-modal-body::-webkit-scrollbar-thumb:hover { 
+  background: rgba(255, 255, 255, 0.3); 
+}
+
+.history-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.history-card {
+  /* MOBILE FIRST: 2 Columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 16px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.history-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(4px);
+}
+
+/* DESKTOP UPGRADE: 3 Columns */
+@media (min-width: 768px) {
+  .history-card {
+    grid-template-columns: 1.5fr 2fr 1fr;
+    gap: 0;
+  }
+}
+
+/* The color-coded indicator stripe */
+.history-card-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+}
+.history-card-indicator.profit { background: var(--semantic-success); }
+.history-card-indicator.loss { background: var(--semantic-danger); }
+
+/* --- INTERNAL COLUMNS --- */
+.history-asset-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* On mobile, this drops to a new row and takes full width */
+.history-journey-col {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  grid-column: 1 / -1; /* Forces it to stretch across both mobile columns */
+  background: rgba(255, 255, 255, 0.03); /* Subtle background to separate it on mobile */
+  padding: 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* On desktop, reset to act as the middle column */
+@media (min-width: 768px) {
+  .history-journey-col {
+    grid-column: auto;
+    justify-content: center;
+    background: transparent;
+    padding: 0;
+  }
+}
+
+.history-outcome-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  text-align: right;
+}
+
+
+.journey-point {
+  display: flex;
+  flex-direction: column;
+}
+
+.journey-arrow {
+  color: var(--text-secondary);
+  opacity: 0.5;
 }

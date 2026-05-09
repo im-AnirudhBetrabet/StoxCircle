@@ -1,7 +1,23 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from '@phosphor-icons/react';
+import { useEffect } from 'react';
 
 export default function Modal({ isOpen, onClose, title, children }) {
+
+    useEffect(() => {
+        if (isOpen) {
+        // Prevent scrolling on the main page
+        document.body.style.overflow = 'hidden';
+        } else {
+        // Re-enable scrolling when closed
+        document.body.style.overflow = 'unset';
+        }
+
+        // Cleanup function in case the component unmounts while open
+        return () => {
+        document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
     return (
         <AnimatePresence>
             {isOpen && (

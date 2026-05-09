@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, Tooltip, ResponsiveContainer } from 'recharts';
-import { ArrowLeft, Plus, TrendUp, WarningCircle, X, SpinnerGap, UserIcon, WalletIcon, PlusIcon, CheckIcon, ChartPieSlice, CrosshairIcon, ShieldWarningIcon, ArrowLeftIcon, ChartBarIcon } from '@phosphor-icons/react';
+import { ArrowLeft, Plus, TrendUp, WarningCircle, X, SpinnerGap, UserIcon, WalletIcon, PlusIcon, CheckIcon, ChartPieSlice, CrosshairIcon, ShieldWarningIcon, ArrowLeftIcon, ChartBarIcon, ClockCounterClockwiseIcon } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Modal from '../components/Modal';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,15 +8,17 @@ import { supabase } from '../lib/supabase';
 import HoldingDetailModal from '../components/modals/HoldingDetailModal';
 import EquityModal from '../components/modals/EquityModal';
 import AnalyticsModal from '../components/modals/AnalyticsModal';
+import ClosedTradesModal from '../components/modals/ClosedTradesModal';
 
 
-
+const SECTOR_COLORS = ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981', '#ec4899', '#06b6d4'];
 export default function GroupDashboard() {
     // --- State ---
-    const [group    , setGroup    ] = useState(null);
-    const [positions, setPositions] = useState([]);
-    const [trades   , setTrades   ] = useState([]);
-    const [members  , setMembers  ] = useState([]);
+    const [group       , setGroup       ] = useState(null);
+    const [positions   , setPositions   ] = useState([]);
+    const [trades      , setTrades      ] = useState([]);
+    const [members     , setMembers     ] = useState([]);
+    const [closedTrades, setClosedTrades] = useState([]);
     
     const [recentTrades     , setRecentTrades     ] = useState([]);
     const [isLoading        , setIsLoading        ] = useState(true);
@@ -33,6 +35,7 @@ export default function GroupDashboard() {
           targetPct :  [6, 9, 12]    // T1 = 5%, T2 = 10%, T3 = 15%
         })
     const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
+    const [isHistoryModalOpen  , setIsHistoryModalOpen  ] = useState(false);
  
     // Action Loading States (for micro-interactions)
     const [processingRequest, setProcessingRequest] = useState(false);
@@ -129,12 +132,15 @@ export default function GroupDashboard() {
             }
 
             const data = await response.json();
-            setIsLoading(false)
             const groupPositions = data.portfolio?.positions
             const recentTrades   = data.recent_trades;
             const group_metrics  = data.group_metrics[0];
+            const sector_allocs  = data.portfolio?.sector_allocation;
+            const closed_trades  = data.portfolio?.closed_trades;
+            setIsLoading(false)
             setPositions(groupPositions);
             setRecentTrades(recentTrades);
+            setClosedTrades(closed_trades);
             
             
             const realizedPnl = data.portfolio?.realized_pnl;
@@ -177,7 +183,7 @@ export default function GroupDashboard() {
                     ]
                 };
 
-            setMetrics({ invested, current, totalPnl, pnlPct, realizedPnl, runningPnl, cashBalance, analytics: {...mappedAnalytics} });
+            setMetrics({ invested, current, totalPnl, pnlPct, realizedPnl, runningPnl, cashBalance, analytics: {...mappedAnalytics}, sectorAllocations: sector_allocs });
             
 
 
@@ -328,6 +334,9 @@ export default function GroupDashboard() {
 
                 {/* NEW: Grouped Header Actions */}
                 <div className="header-actions">
+                    <button className="btn btn-secondary" onClick={() => setIsHistoryModalOpen(true)}>
+                        <ClockCounterClockwiseIcon weight="bold" /> History
+                    </button>
                     <button className="btn btn-secondary" onClick={() => setIsAnalyticsModalOpen(true)}>
                         <ChartBarIcon weight="bold" /> Analytics
                     </button>
@@ -352,11 +361,9 @@ export default function GroupDashboard() {
                         <p className="kpi-value">{formatCurrency(metrics.invested)}</p>
                     </div>
                     
-                    {/* Reusing the breakdown row we made for P&L */}
                     <div className="kpi-breakdown">
                         <div className="kpi-breakdown-item">
                         <span className="kpi-breakdown-label">Available Cash</span>
-                        {/* Using text-success (green) to imply buying power */}
                         <span className="kpi-breakdown-value text-success">
                             {formatCurrency(metrics.cashBalance || 0)}
                         </span>
@@ -378,7 +385,6 @@ export default function GroupDashboard() {
                         </p>
                     </div>
                     
-                    {/* New Breakdown Row */}
                     <div className="kpi-breakdown">
                         <div className="kpi-breakdown-item">
                         <span className="kpi-breakdown-label">Realized</span>
@@ -404,6 +410,7 @@ export default function GroupDashboard() {
 
                     {/* Positions Table */}
                     <div className="dashboard-card" style={{ minWidth: 0, border: 'none', background: 'transparent', padding: 0, boxShadow: 'none' }}>
+                        
                         <h3 className="dashboard-card-header" style={{ padding: '0 4px' }}>Current Holdings</h3>
                         
                         <div className="holdings-list">
@@ -715,6 +722,12 @@ export default function GroupDashboard() {
                 isOpen={isAnalyticsModalOpen}
                 onClose={() => setIsAnalyticsModalOpen(false)}
                 analytics={metrics.analytics}
+                sectors={metrics.sectorAllocations}
+            />
+            <ClosedTradesModal 
+                isOpen={isHistoryModalOpen}
+                onClose={() => setIsHistoryModalOpen(false)}
+                history={closedTrades}
             />
         </motion.div>
     );
