@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, UserCircle, CalendarBlank } from '@phosphor-icons/react';
+import { Plus, UserCircle, CalendarBlank, BrainIcon } from '@phosphor-icons/react';
 import Modal from '../components/Modal';
 import { mockGroups, formatCurrency } from '../data/mockData';
 import { supabase } from '../lib/supabase';
@@ -152,7 +152,10 @@ export default function Home() {
                     {/* <h1 style={{ fontSize: '2rem', fontWeight: 600, marginBottom: 4 }}>Your Groups</h1> */}
                     {/* <p style={{ color: 'var(--text-secondary)' }}>Manage shared portfolios and track performance.</p> */}
                 </div>
-                <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Plus size={18} weight="bold" /> Create Group</button>
+                <div className="header-actions">
+                    <button className="btn btn-primary" onClick={() => setModalOpen(true)}><Plus size={18} weight="bold" /> Create Group</button>
+                    <button className="btn btn-secondary" onClick={() => navigate("/analytics")}><BrainIcon size={18} weight="bold" /> Stock Analysis</button>
+                </div>
             </header>
             
                 {

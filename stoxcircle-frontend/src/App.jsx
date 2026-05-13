@@ -9,6 +9,12 @@ import GroupDetail from './pages/GroupDetail';
 import { supabase } from './lib/supabase';
 import Home from './pages/Home';
 import GroupDashboard from './pages/GroupDashboard';
+import { AnalyticsHub } from './pages/AnalyticsHub';
+import { StockAnalytics } from './pages/StockAnalytics';
+import { UniverseScreener } from './pages/UniverseScreener';
+import { SectorRotation } from './pages/SectorRotation';
+import { BestWindows } from './pages/BestWindows';
+import { SectorAnalysis } from './pages/SectorAnalysis';
 
 export default function App() {
   // Mocking Supabase Session
@@ -62,6 +68,12 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/group/:groupId" element={<GroupDashboard />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
+          <Route path="analytics" element={<AnalyticsHub />} />
+          <Route path="analytics/stocks/:symbol" element={<StockAnalytics />} />
+          <Route path="analytics/screener/universe" element={<UniverseScreener />} />
+          <Route path="analytics/market/sector-rotation" element={<SectorRotation />} />
+          <Route path="analytics/best-windows" element={<BestWindows />} />
+          <Route path="analytics/screener/sector" element={<SectorAnalysis />} />
         </Routes>
       </AnimatePresence>
     </>

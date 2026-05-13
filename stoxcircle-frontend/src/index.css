@@ -1318,3 +1318,578 @@ body {
   color: var(--text-secondary);
   opacity: 0.5;
 }
+
+.screener-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.table-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table th {
+  padding: 16px 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.01);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.data-table th:hover {
+  color: var(--text-primary);
+}
+
+.data-table td {
+  padding: 16px 20px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: background 0.2s;
+}
+
+/* Glassmorphic row hover */
+.data-table tbody tr:hover td {
+  background: var(--bg-surface-hover);
+  cursor: pointer;
+}
+
+.symbol-cell {
+  font-weight: 600;
+  color: var(--brand-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.company-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 60px 20px 80px;
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+  border-bottom: 1px solid var(--border-subtle);
+  margin: -32px -32px 32px -32px; /* Pulls it flush with the container edges */
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+/* Big Search Bar */
+.hero-search-container {
+  position : relative;
+  width    : 100%;
+  max-width: 600px;
+}
+
+.hero-search-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  padding: 16px 24px 16px 54px;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  border-radius: 100px;
+  outline: none;
+  transition: all 0.2s;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.hero-search-input:focus {
+  border-color: var(--brand-primary);
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+}
+
+/* Quick Action Cards */
+.action-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.action-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.2s ease;
+}
+
+.action-card:hover {
+  background: var(--bg-surface-hover);
+  border-color: rgba(255,255,255,0.15);
+  transform: translateY(-4px);
+}
+
+.action-icon-wrapper {
+  background: var(--brand-primary-dim);
+  color: var(--brand-primary);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+
+
+.heatmap-wrapper {
+  margin-top: 32px;
+  overflow-x: auto; 
+  padding-bottom: 16px;
+}
+
+.heatmap-grid {
+  display: grid;
+  /* 1 column for Year, 12 columns for Months */
+  grid-template-columns: 60px repeat(12, minmax(50px, 1fr));
+  gap: 4px;
+  min-width: 800px;
+}
+
+.heatmap-header-cell {
+  padding: 12px 8px;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.heatmap-year-cell {
+  padding: 12px 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.heatmap-data-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  border-radius: 4px;
+  transition: transform 0.1s, filter 0.1s;
+  cursor: default;
+}
+
+.heatmap-data-cell:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.heatmap-empty-cell {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+/* --- FORMS & CONTROLS (Shared Filters) --- */
+
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 120px; /* Prevents inputs from squishing too much on small screens */
+}
+
+.input-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2); /* Creates that inset, dark feel */
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+/* The glowing border effect when a user clicks into an input */
+.form-input:focus { 
+  border-color: var(--brand-primary); 
+  box-shadow: 0 0 0 1px var(--brand-primary); /* Gives it a crisp, solid focus ring */
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Styling specifically for dropdown selects to match text inputs */
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23a1a1aa' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+select.form-input option {
+  background: var(--bg-base); /* Prevents white dropdowns in dark mode */
+  color: var(--text-primary);
+}
+
+/* --- BUTTONS --- */
+
+.btn-primary {
+  background: var(--brand-primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  height: 40px; /* Aligns perfectly with the inputs */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover { 
+  background: #2563eb; /* Slightly lighter blue */
+}
+
+.btn-primary:active {
+  transform: translateY(1px); /* Satisfying click feel */
+}
+
+.responsive-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to stacked for mobile */
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (min-width: 1024px) {
+  .responsive-grid-2 {
+    grid-template-columns: 1fr 1fr; /* Side-by-side on large screens */
+  }
+}
+
+/* 2. Responsive Controls Bar (Stacks inputs on phones) */
+@media (max-width: 768px) {
+  .controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .input-group {
+    width: 100%;
+  }
+  .btn-primary {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+/* 3. Responsive Tables & Heatmaps */
+/* Ensures wide tables swipe horizontally on mobile instead of breaking the layout */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 768px) {
+  /* Shrink the hero padding so it doesn't take up the entire screen */
+  .home-hero {
+    padding: 40px 16px 50px;
+    margin: -16px -16px 24px -16px; /* Adjusts the negative margin for mobile padding */
+  }
+  .hero-search-container{
+    margin: 0 1rem;
+  }
+  /* Scale down the massive desktop typography */
+  .hero-title {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 32px;
+  }
+
+  /* Force the action cards into a single column so they don't overflow */
+  .action-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Slightly tighter padding inside the cards */
+  .action-card {
+    padding: 24px 20px;
+  }
+}
+
+/* Extra tweaks for very small phones (e.g., iPhone SE) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.85rem; 
+  }
+  .hero-search-container{
+    margin: 0 1rem;
+  }
+  .hero-search-input {
+    font-size: 1rem;
+    padding: 14px 20px 14px 44px; /* Slightly tighter padding */
+  }
+}
+
+.kpi-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+.kpi-card:hover {
+  background: var(--bg-surface-hover);
+  transform: translateY(-2px);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px;
+  margin-left: -8px;
+  margin-right: 8px;
+  border-radius: var(--radius-sm);
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
+/* Best Windows Specific Fixes */
+.best-windows-controls {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.symbol-search-card {
+  flex: none;
+  width: 250px;
+  background: var(--bg-surface);
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+/* --- MOBILE BREAKPOINT (< 768px) --- */
+
+.search-dropdown-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: rgba(24, 24, 27, 0.95); /* var(--bg-surface) with slight opacity */
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  max-height: 350px;
+  overflow-y: auto;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar for the dropdown */
+.search-dropdown::-webkit-scrollbar { width: 4px; }
+.search-dropdown::-webkit-scrollbar-track { background: transparent; }
+.search-dropdown::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+
+.search-dropdown-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.1s;
+}
+
+.search-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.search-dropdown-item:hover,
+.search-dropdown-item.active {
+  background: var(--bg-surface-hover);
+}
+
+.search-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.search-item-symbol {
+  font-weight: 600;
+  color: var(--brand-primary);
+  font-size: 0.9rem;
+}
+
+.search-item-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.search-empty-state {
+  padding: 16px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+  
+  /* 1. Sidebar Slide-Out */
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px; /* Hide off-screen by default */
+    bottom: 0;
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .app-sidebar.open {
+    transform: translateX(260px); /* Slide in */
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+  }
+
+  /* 2. Header Adjustments */
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .app-header {
+    padding: 0 16px; /* Tighter padding */
+  }
+
+  .header-search-container {
+    width: 100% !important; /* Take full width on mobile */
+  }
+
+  /* 3. Best Windows & Filters */
+  .best-windows-controls {
+    flex-direction: column;
+  }
+
+  .symbol-search-card {
+    width: 100%; /* Force symbol search to full width */
+  }
+  .search-dropdown-wrapper {
+    max-width: 350px;
+  }
+}
